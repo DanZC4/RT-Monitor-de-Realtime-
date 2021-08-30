@@ -1,28 +1,84 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="bg-gris md:px-12 lg:px-24 md:py-12 text-gray-100 flex justify-center">
+      <div
+        class="
+          overflow-hidden
+          bg-gray-100
+          w-full
+          max-w-10xl
+          3xl:max-w-12xl
+          rounded-lg
+        "
+      >
+        <Nav />
+        <div class="flex">
+          <ControlLeft />
+          <BarLeft :barmenu="barmenu" :barOn="barOn" :barOff="barOff" />
+          <MenuLeft :barOn="barOn" :barOff="barOff" />
+          <Map :barOn="barOn" :barOff="barOff" />
+          <ControlRigth/>
+        </div>
+         <ControlBottom />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Map from "./components/Map.vue";
+import ControlLeft from "./components/ControlLeft.vue";
+import ControlRigth from "./components/ControlRigth.vue";
+import BarLeft from "./components/BarLeft.vue";
+
+import MenuLeft from "./components/MenuLeft.vue";
+import Nav from "./components/Nav.vue";
+import ControlBottom from "./components/ControlBottom.vue";
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    Map,
+    Nav,
+    ControlLeft,
+    ControlRigth,
+    BarLeft,
+    MenuLeft,
+    ControlBottom
+  },
+  data() {
+    return {
+      barOn: true,
+      barOff: false,
+      window: {
+        width: 0,
+        height: 0,
+      },
+    };
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      if (window.innerWidth >= 1780) {
+(this.barOn = true), (this.barOff = false);
+      } 
+    
+    },
+    barmenu() {
+      if (this.barOn == true && this.barOff == false) {
+        (this.barOn = false), (this.barOff = true);
+      } else {
+        (this.barOn = true), (this.barOff = false);
+      }
+    },
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
